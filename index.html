@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Layla 🎉</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        text-align: center;
+    }
+
+    #main {
+        position: relative;
+        z-index: 10;
+        padding-top: 80px;
+    }
+
+    h1 {
+        color: #ff4081;
+        font-size: 3em;
+        animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-15px); }
+    }
+
+    button {
+        background: #ff4081;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        margin: 10px;
+        font-size: 1.2em;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #f50057;
+        transform: scale(1.2);
+    }
+
+    .balloon {
+        position: absolute;
+        bottom: -150px;
+        width: 50px;
+        height: 70px;
+        border-radius: 50%;
+        opacity: 0.9;
+        animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-120vh); }
+    }
+
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-10px) rotate(0deg);}
+        100% { transform: translateY(100vh) rotate(720deg);}
+    }
+
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        font-size: 1.3em;
+        color: #ff4081;
+        transition: 0.4s;
+        z-index: 20;
+    }
+
+    .popup.show {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+</style>
+</head>
+<body>
+
+<div id="main">
+    <h1>🎉 Happy Birthday Layla! 🎂</h1>
+    <p>Click the buttons below for surprises!</p>
+    <button onclick="releaseBalloons()">🎈 Balloons</button>
+    <button onclick="showConfetti()">✨ Confetti</button>
+    <button onclick="nextMessage()">💬 Message</button>
+</div>
+
+<div id="popup" class="popup"></div>
+
+<audio id="music" src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" loop></audio>
+
+<script>
+const popup = document.getElementById('popup');
+const music = document.getElementById('music');
+let msgIndex = 0;
+const messages = [
+    "Hey Layla! 🎉 Hope your day is as special as you!",
+    "Wishing you smiles, laughter, and joy all day long 💕",
+    "You're amazing, strong, and beautiful! 🌸",
+    "Here’s to more adventures, love, and happiness! 🌈",
+    "Now enjoy your day, birthday girl! 💖"
+];
+
+function startExperience(){
+    music.play();
+    setTimeout(releaseBalloons, 1000);
+    setTimeout(showConfetti, 4000);
+    setTimeout(()=> showMessage("Make a wish, Layla! 🌠"), 7000);
+    setTimeout(()=> showMessage("You’re the star of the day ✨"), 15000);
+    setTimeout(()=> showMessage("Sending hugs and smiles 🤗"), 25000);
+    setTimeout(()=> showMessage("Stay awesome, stay you 💫"), 40000);
+    setTimeout(()=> showMessage("Hope this made you smile 😊"), 60000);
+}
+
+function showMessage(text){
+    popup.textContent = text;
+    popup.classList.add('show');
+    setTimeout(()=> popup.classList.remove('show'), 4000);
+}
+
+function nextMessage(){
+    showMessage(messages[msgIndex]);
+    msgIndex = (msgIndex + 1) % messages.length;
+}
+
+function releaseBalloons(){
+    for(let i=0;i<20;i++){
+        const b = document.createElement('div');
+        b.classList.add('balloon');
+        b.style.left = Math.random()*100 + 'vw';
+        b.style.background = `hsl(${Math.random()*360},100%,70%)`;
+        b.style.animationDuration = (Math.random()*3+4)+'s';
+        document.body.appendChild(b);
+        setTimeout(()=>b.remove(),7000);
+    }
+}
+
+function showConfetti(){
+    for(let i=0;i<100;i++){
+        const c = document.createElement('div');
+        c.classList.add('confetti');
+        c.style.left = Math.random()*window.innerWidth + 'px';
+        c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.width = c.style.height = (Math.random()*8+5)+'px';
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+}
+
+window.onload = startExperience;
+</script>
+
+</body>
+</html>
